@@ -1,0 +1,29 @@
+
+@media (max-width: 400px) {
+    .orderQty {
+        flex-wrap: wrap;
+    }
+    .orderNo {
+        flex-wrap: wrap;
+    }
+    .clearAll {
+margin-left: 0 !important;
+        margin-top: 1rem;
+    }
+   .ggggg{
+    margin-left: 0!important;
+       margin-bottom: 1rem;
+}
+   .ggggg2{
+       margin-bottom: 1rem;
+   }
+    .orerHeader{
+        flex-direction: column;
+    }
+
+
+}
+
+.th-center{
+    text-align: center!important;
+}
