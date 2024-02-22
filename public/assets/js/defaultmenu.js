@@ -364,7 +364,7 @@ function ResizeMenu() {
         mainContent.removeEventListener("click", clearNavDropdown);
       }
       if (
-        !document.querySelector("html").getAttribute("data-toggled") ==
+        !document.querySelector("html").getAttribute("data-toggled") ===
         "double-menu-open"
       ) {
         html.removeAttribute("data-toggled");
@@ -382,7 +382,7 @@ function menuClose() {
   html.setAttribute("data-toggled", "close");
   document.querySelector("#responsive-overlay").classList.remove("active");
 }
-function toggleSidemenu() {
+function toggleSidemenu(qualifiedName) {
   let html = document.querySelector("html");
   let sidemenuType = html.getAttribute("data-nav-layout");
 

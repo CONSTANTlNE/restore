@@ -21,22 +21,25 @@ class FortifyServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        Fortify::registerView(function(){
+        Fortify::loginView(function () {
+            return view('auth.login');
+        });
+
+        Fortify::registerView(function () {
             return view('auth.register');
         });
 
-        Fortify::loginView(function (){
-            return view('auth.login');
-        });
-        Fortify::requestPasswordResetLinkView(function (){
-            return view('auth.password.request');
+        //View with email input to send password reset link
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password');
         });
 
-        Fortify::resetPasswordView(function (){
-            return view('auth.password.edit');
+        //View with two email inputs for new password
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', ['request' => $request]);
         });
 
-        Fortify::verifyEmailView(function (){
+        Fortify::verifyEmailView(function () {
             return view('auth.verify-email');
         });
 

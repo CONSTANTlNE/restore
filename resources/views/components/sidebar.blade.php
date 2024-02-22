@@ -1,8 +1,11 @@
 <aside class="app-sidebar" id="sidebar">
 
     <!-- Start::main-sidebar-header -->
-    <div class="main-sidebar-header">
-RESTORE
+    <div style="z-index: -1000" class="main-sidebar-header">
+        <div class="header-logo">
+            RESTORE
+        </div>
+
     </div>
     <!-- End::main-sidebar-header -->
 
@@ -47,42 +50,109 @@ RESTORE
                 <!-- End::slide -->
 
 
-
                 <!-- Start::slide -->
+
+                @hasanyrole('admin|operator')
                 <li class="slide">
                     <a href="/" class="side-menu__item">
-                   <span style="margin-right: 10px;text-align: center" class="material-symbols-outlined">home</span>
-                        <span class="side-menu__label">მთავარი</span>
-                    </a>
-                </li>
-                @role('customer')
-                <li class="slide">
-                    <a href="widgets.html" class="side-menu__item">
-                        <i class="bx bx-gift side-menu__icon"></i>
-                        <span class="side-menu__label">ყველა ამანათი</span>
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">home
+                        </span>
+                        <span class="side-menu__label">შეკვეთები</span>
+
+                        <span id="badge" style="display: none"
+                              class="flex absolute h-10 w-10 -top-[1rem] end-1  -me-[1rem]">
+              <span class="animate-slow-ping absolute inline-flex -top-[2px] -start-[px] h-full w-full rounded-full bg-secondary/40 opacity-75"></span>
+              <span class="relative inline-flex justify-center items-center rounded-full  h-[14.7px] w-[14px] bg-secondary text-[0.625rem] text-white"
+                    id="notification-icon-badge2"></span>
+            </span>
+
                     </a>
                 </li>
                 @endrole
-                @hasanyrole('admin|operator')
+
+                @role('customer')
                 <li class="slide">
-                    <a href="{{route('settings')}}" class="side-menu__item">
-                        <span style="margin-right: 10px;text-align: center" class="material-symbols-outlined">settings</span>
-                        <span class="side-menu__label">მართვა</span>
+                    <a href="{{route('customer-index')}}" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">orders</span>
+                        <span class="side-menu__label">შეკვეთები</span>
                     </a>
                 </li>
                 <li class="slide">
+                    <a href="{{route('customer-items')}}" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">list_alt</span>
+                        <span class="side-menu__label">ყველა ამანათი</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a href="{{route('customer_balance_details')}}" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center" class="material-symbols-outlined">account_balance_wallet</span>
+                        <span class="side-menu__label">ბალანსი</span>
+                    </a>
+                </li>
+                @endrole
+
+
+                @role('driver')
+                <li class="slide">
+                    <a href="/" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">home</span>
+                        <span class="side-menu__label">აქტიური</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a href="{{route('item-finished')}}" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">check_box</span>
+                        <span class="side-menu__label">ჩაბარებული</span>
+                    </a>
+                </li>
+                @endrole
+
+
+                @hasanyrole('admin|operator')
+
+                @role('admin')
+                <li class="slide">
+                    <a href="{{route('settings')}}" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">settings</span>
+                        <span class="side-menu__label">მართვა</span>
+                    </a>
+                </li>
+                @endrole
+                <li class="slide">
                     <a href="{{route('users')}}" class="side-menu__item">
-                      <span style="margin-right: 10px;text-align: center" class="material-symbols-outlined">group</span>
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">group</span>
                         <span class="side-menu__label">მომხმარებლები</span>
                     </a>
                 </li>
                 <li class="slide">
                     <a href="{{route('orders')}}" class="side-menu__item">
-                        <span style="margin-right: 10px;text-align: center" class="material-symbols-outlined">list_alt</span>
-                        <span class="side-menu__label">შეკვეთები</span>
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">list_alt</span>
+                        <span class="side-menu__label">ამანათები</span>
                     </a>
                 </li>
-
+                @role('admin')
+                <li class="slide">
+                    <a href="{{route('payments')}}" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center"
+                              class="material-symbols-outlined">payments</span>
+                        <span class="side-menu__label">გადახდები</span>
+                    </a>
+                </li>
+                @endrole
+                <li class="slide">
+                    <a href="{{route('balance')}}" class="side-menu__item">
+                        <span style="margin-right: 10px;text-align: center" class="material-symbols-outlined">account_balance_wallet</span>
+                        <span class="side-menu__label">ბალანსი</span>
+                    </a>
+                </li>
                 @endhasanyrole
 
 

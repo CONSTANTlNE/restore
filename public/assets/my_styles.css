@@ -1,4 +1,10 @@
 
+.copy-button:hover{
+    color:green;
+    cursor: pointer;
+}
+
+
 @media (max-width: 400px) {
     .orderQty {
         flex-wrap: wrap;

@@ -12,10 +12,9 @@ class CustomRedirectController extends Controller
 
             return redirect()->route('customer-index');
 
-        }elseif(auth()->user()->hasRole('driver')){
+        }else if(auth()->user()->hasRole('driver')){
 
             return redirect()->route('driver-index');
-
 
         }
 

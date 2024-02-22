@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('users');
             $table->foreign('driver_id')->references('id')->on('users');
             $table->string('sum_value')->nullable();
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(false);
         });
     }
 

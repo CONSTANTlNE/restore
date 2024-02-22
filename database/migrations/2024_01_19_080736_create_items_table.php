@@ -16,21 +16,24 @@ return new class extends Migration {
             $table->foreignId('order_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('package_id')->nullable();
             $table->string('description')->nullable();
-            $table->string('weight')->nullable();
-            $table->string('height')->nullable();
-            $table->string('width')->nullable();
-            $table->string('length')->nullable();
-            $table->string('volume')->nullable();
+            $table->float('weight')->nullable();
+            $table->float('height')->nullable();
+            $table->float('width')->nullable();
+            $table->float('length')->nullable();
+            $table->float('volume')->nullable();
             $table->string('receiver')->nullable();
-            $table->string('receiver_phone')->nullable();
+            $table->integer('receiver_phone')->nullable();
+            $table->string('delivery_price')->nullable();
             $table->text('receiver_address')->nullable();
-            $table->string('item_value')->nullable();
+            $table->float('item_value')->nullable();
             $table->string('customer_comment')->nullable();
             $table->unsignedBigInteger('driver_id')->nullable();
+            $table->timestamp('delivered_at')->nullable();
             $table->foreign('driver_id')->references('id')->on('users');
             $table->string('driver_comment')->nullable();
             $table->foreignId('sector_id')->nullable()->constrained();
             $table->boolean('delivered')->default(false)->nullable();
+            $table->boolean('status')->default(false);
         });
     }
 

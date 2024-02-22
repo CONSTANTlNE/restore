@@ -25,14 +25,16 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $this->call(RoleSeeder::class);
-        $user = User::factory(1)->create()->first();
-        $user->assignRole('customer');
+//        $this->call(RoleSeeder::class);
+//        $user = User::factory(1)->create()->first();
+//        $user->assignRole('customer');
         // Create or retrieve the 'customer' role
 
         // Assign the 'customer' role to the user
-
+        $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
+        $this->call(SectorSeeder::class);
+        $this->call(CustomUserSeeder::class);
 
     }
 }

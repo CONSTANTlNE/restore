@@ -13,32 +13,61 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $user=User::create([
+
+
+        $admin1=User::create([
             'name' => 'Constantine',
             'email' => 'gmta.constantine@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
-        $user->assignRole('admin');
+        $admin1->assignRole('admin');
 
-        $user=User::create([
+
+        $admin2=User::create([
+            'name' => 'Admin 2',
+            'email' => 'admin2@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+        $admin2->assignRole('admin');
+
+
+        $operator=User::create([
             'name' => 'operator',
             'email' => 'operator@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
-        $user->assignRole('operator');
+        $operator->assignRole('operator');
 
 
-        $user=User::create([
-            'name' => 'driver',
-            'email' => 'driver@gmail.com',
+        $courier=User::create([
+            'name' => 'Courier 1',
+            'email' => 'courier1@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
-        $user->assignRole('driver');
+        $courier->assignRole('driver');
+
+
+        $courier2=User::create([
+            'name' => 'Courier 2',
+            'email' => 'courier2@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+        $courier2->assignRole('driver');
+
+
+        $courier3=User::create([
+            'name' => 'Courier 3',
+            'email' => 'courier3@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+        $courier3->assignRole('driver');
 
     }
-
 
 }

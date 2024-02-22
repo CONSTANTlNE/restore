@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" data-nav-layout="vertical" class="dark" data-header-styles="dark" data-menu-styles="dark">
 @php
-    //    dd($roles)
+    //        dd($jsonSectors)
 @endphp
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> RESTORE </title>
-    <meta name="description"
-          content="A Tailwind CSS admin template is a pre-designed web page for an admin dashboard. Optimizing it for SEO includes using meta descriptions and ensuring it's responsive and fast-loading.">
     <meta name="keywords"
-          content="html dashboard,tailwind css,tailwind admin dashboard,template dashboard,html and css template,tailwind dashboard,tailwind css templates,admin dashboard html template,tailwind admin,html panel,template tailwind,html admin template,admin panel html">
-
+          content="ციფრული მენიუ, QR მენიუ, რესტორნის მენიუ, შეფასების სისტემა, QR menu, ელექტრონული მენიუ">
+    @role('admin')
+    <title> RESTORE-ADMIN </title>
+    @endrole
+    @role('customer')
+    <title> RESTORE-Customer </title>
+    @endrole
+    @role('operator')
+    <title> RESTORE-Operator </title>
+    @endrole
+    @role('driver')
+    <title> RESTORE-Courier </title>
+    @endrole
+    @guest
+        <title> RESTORE-Guest </title>
+    @endguest
+    <meta name="theme-color" content="#EEF2FF">
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('assets/images/brand-logos/favicon.ico')}}">
-
     <!-- Main JS -->
     <script src="{{asset('assets/js/main.js')}}"></script>
-
     <!-- Style Css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-
     <!-- Simplebar Css -->
     <link rel="stylesheet" href="{{asset('assets/libs/simplebar/simplebar.min.css')}}">
-
     <!-- Color Picker Css -->
     <link rel="stylesheet" href="{{asset('assets/libs/@simonwep/pickr/themes/nano.min.css')}}">
     <link rel="stylesheet"
@@ -35,6 +44,13 @@
     <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
 
+    <style>
+        /* For Chrome, Safari, and Opera browsers */
+        .dataTables_scrollBody::-webkit-scrollbar {
+            height: 1em !important; /* Change the height here for horizontal scroll */
+        }
+
+    </style>
 </head>
 
 <body>
@@ -53,10 +69,13 @@
 <div class="page">
 
     <!-- Start::Header -->
-    @include('components.header')
-    <!-- End::Header -->
-    <!-- Start::app-sidebar -->
-    @include('components.sidebar')
+    @if(!request()->routeIs('customer_order_edit'))
+        @include('components.header')
+        <!-- End::Header -->
+
+        <!-- Start::app-sidebar -->
+        @include('components.sidebar')
+    @endif
     <!-- End::app-sidebar -->
 
 
@@ -64,14 +83,17 @@
     <div class="content">
         <!-- Start::main-content -->
         <div class="main-content">
-            <!-- Page Header -->
-
-            @yield('customer')
+            @yield('customer-orders')
+            @yield('customer-packages')
             @yield('admin-users')
             @yield('admin-orders')
             @yield('admin-settings')
-
-            <!-- Page Header Close -->
+            @yield('admin-balance')
+            @yield('admin-payments')
+            @yield('admin-balance-detailed')
+            @yield('driver-index')
+            @yield('driver-finished')
+            @yield('customer-order-edit')
         </div>
     </div>
     <!-- End::content  -->
@@ -80,10 +102,11 @@
     @include('components.searchModal')
     <!-- ========== END Search Modal ========== -->
 
-    <!-- Footer Start -->
-    @include('components.footer')
-    <!-- Footer End -->
-
+    @if(!request()->routeIs('customer_order_edit'))
+        <!-- Footer Start -->
+        @include('components.footer')
+        <!-- Footer End -->
+    @endif
 </div>
 
 <!-- Back To Top -->
@@ -92,6 +115,9 @@
 </div>
 
 <div id="responsive-overlay"></div>
+
+{{--<audio id="notification-sound" src="{{asset('assets/sms.mp3')}} " preload="auto"></audio>--}}
+{{--<button style="display: none" id="play-button">Play Sound</button>--}}
 
 <!-- Preline JS -->
 <script src="{{asset('assets/libs/preline/preline.js')}}"></script>
@@ -119,6 +145,15 @@
     {{-- ORDER MODAL--}}
     <script>
         const orderCount = document.querySelector('.orderCount')
+        let typingTimer;
+        const time = 3000; // 3 seconds
+        orderCount.addEventListener('keyup', () => {
+            typingTimer = setTimeout(() => {
+                orderCount.disabled = true;
+            }, time);
+        });
+
+
         const btnContainer = document.querySelector('.btnContainer')
         const orderInfoContainer = document.querySelector('.orderInfoContainer')
         const sectors = {!! $jsonSectors !!};
@@ -167,7 +202,11 @@
                     </div>
                     <div class="xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12 pt-2 text-center mt-2">
                         <label for="weight${i}" class="form-label">წონა</label>
-                        <input  type="text" name="weight[]" class="form-control validation" id="weight${i}" placeholder="ამანათის წონა">
+                        <input   type="text" name="weight[]" class="form-control validation" id="weight${i}" placeholder="ამანათის წონა">
+                    </div>
+                    <div class="xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12 pt-2 text-center mt-2 flex flex-col">
+                        <label for="package_value${i}" class="form-label m-auto">ამანათის ღირებულება</label>
+                        <input style="width:100px;padding: 8px"  type="text" name="package_value[]" class="form-control validation m-auto" id="package_value${i}" placeholder="ღირებულება">
                     </div>
                       <div class="xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12 pt-2 text-center mt-2">
                         <label  class="form-label mt-2">მოცულობა</label>
@@ -191,9 +230,11 @@
                           </div>
                           <div class="box">
                           <div class="flex gap-8 justify-center mt-4">
-                                <select style='width:150px' name="sector[]" class="ti-form-select rounded-sm !p-0 tomselect2"   autocomplete="off">
+                                <select style='width:150px' name="sector[]" class="ti-form-select rounded-sm !p-0 deliveryprice tomselect2"   autocomplete="off">
                                   <option value=""></option>
                                 </select>
+
+
                             </div>
                              <div class="xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12 pt-2 text-center mt-2">
                                 <label for="recipient-address${i}" class="form-label">მისამართი</label>
@@ -208,7 +249,9 @@
                     </div>
                     </div>
                 </div>
+
                 </div>`
+
 
                 orderInfoContainer.innerHTML += orderInfoHTML
 
@@ -217,27 +260,20 @@
 
                 // initialize tomselect
                 tomselect2.forEach((item, index) => {
-                    item.addEventListener('mouseover', () => {
-                        item.innerHTML='';
-                        item.setAttribute('id', `select-beast2${index}`)
+                    // item.addEventListener('mouseover', () => {
+                    item.innerHTML = '';
+                    // item.setAttribute('id', `select-beast2${index}`)
 
-                        // add Sector name and id From JSON
-                        sectors.forEach((Sitem) => {
-                            let optionElement = document.createElement('option');
-                            optionElement.value = Sitem.id;
-                            optionElement.textContent = Sitem.name + '-₾' + Sitem['prices'][0]['price'];
-                            item.appendChild(optionElement);
-                        })
 
-                        // new TomSelect(`#select-beast2${index}`, {
-                        //     create: true,
-                        //     sortField: {
-                        //         field: "text",
-                        //         direction: "asc"
-                        //     }
-                        // });
-
+                    // add Sector name and id From JSON
+                    sectors.forEach((Sitem, Sindex) => {
+                        let optionElement = document.createElement('option');
+                        optionElement.value = Sitem['prices'][0]['price'] + '-' + Sitem['id'];
+                        optionElement.textContent = '';
+                        optionElement.textContent = Sitem.name + '-₾' + Sitem['prices'][0]['price'];
+                        item.appendChild(optionElement);
                     })
+
                 })
 
 
@@ -245,10 +281,7 @@
                 firstButton.click()
 
 
-
             }
-            //disable input field
-            // orderCount.disabled = true
 
             // delete each item and  make first addition active
             const deleteButton = document.querySelectorAll('.deleteButton')
@@ -264,35 +297,49 @@
                     firstInfo2.classList.remove('hidden')
 
 
-
-                    // =================== დაჯამება  ================
+                    // =================== დაჯამება წაშლისას  ================
 
                     const totalValue = document.getElementById('total_price')
-                        const prices = document.querySelectorAll('select.tomselect2')
-                        let sum = 0;
-                        prices.forEach((item, index) => {
-                            var selectedOption = item.options[item.selectedIndex];
-                            let content = selectedOption.text.slice(-2);
+                    const totalValue2 = document.getElementById('total_price2')
 
-                            if (content.includes('₾')) {
-                                content = selectedOption.text.slice(-1)
-                            }
+                    const prices = document.querySelectorAll('select.tomselect2')
+                    let sum = 0;
+                    prices.forEach((item, index) => {
+                        var selectedOption = item.options[item.selectedIndex];
+                        let content = selectedOption.text.slice(-2);
 
-                            content = Number(content)
-                            sum += content;
-                            totalValue.value=sum;
-                        })
+                        if (content.includes('₾')) {
+                            content = selectedOption.text.slice(-1)
+                        }
 
+                        content = Number(content)
+                        sum += content;
+                        totalValue.value = sum;
+                        totalValue2.value = sum;
+                    })
 
 
                 })
             })
 
 
+            const totalValue3 = document.getElementById('total_price')
+            const totalValue4 = document.getElementById('total_price2')
+            const prices = document.querySelectorAll('select.deliveryprice ')
+
+            prices.forEach((item, index) => {
+                item.addEventListener('change', () => {
+                    console.log('change')
+                    totalValue3.value = '';
+                    totalValue4.value = '';
+                })
+
+            })
+
         })
 
 
-        // ==============ახალი ამანათის სათითაოდ დამატება===============
+        // ============== ახალი ამანათის სათითაოდ დამატება ===============
         const addItem = document.getElementById("add-item")
         addItem.addEventListener('click', () => {
 
@@ -335,6 +382,10 @@
                         <label for="weight${rand}" class="form-label">წონა</label>
                         <input  type="text" name="weight[]" class="form-control validation" id="weight${rand}" placeholder="ამანათის წონა">
                     </div>
+                     <div class="xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12 pt-2 text-center mt-2 flex flex-col">
+                        <label for="package_value${i}" class="form-label m-auto" >ამანათის ღირებულება</label>
+                        <input style="width:100px;padding: 8px"  type="text" name="package_value[]" class="form-control validation m-auto" id="package_value${i}" placeholder="ღირებულება">
+                    </div>
                       <div class="xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12 pt-2 text-center mt-2">
                         <label  class="form-label mt-2">მოცულობა</label>
                       <div class="sm:flex rounded-sm">
@@ -357,9 +408,10 @@
                           </div>
                           <div class="box">
                           <div class="flex gap-8 justify-center mt-4">
-                                <select style='width:150px' name="sector[]" class="ti-form-select rounded-sm !p-0 tomselect2"   autocomplete="off">
+                                <select style='width:150px' name="sector[]" class="ti-form-select deliveryprice rounded-sm deliveryprice !p-0 tomselect3 validation"   autocomplete="off">
                                   <option value=""></option>
                                 </select>
+                                <input style="display:none" type="text" name="delivery_price[]" class="delivery_price">
                             </div>
                              <div class="xl:col-span-4 lg:col-span-6 md:col-span-6 sm:col-span-12 col-span-12 pt-2 text-center mt-2">
                                 <label for="recipient-address${i}" class="form-label">მისამართი</label>
@@ -378,27 +430,23 @@
             btnContainer.insertAdjacentHTML('beforeend', buttonHTML2);
             orderInfoContainer.insertAdjacentHTML('beforeend', orderInfoHTML2);
 
+
             // CREATE SECTOR SELECT
-            const tomselect2 = document.querySelectorAll('.tomselect2')
-
-            // initialize tomselect
-            tomselect2.forEach((item, index) => {
-                item.addEventListener('mouseover', () => {
-                    item.innerHTML='';
-                    item.setAttribute('id', `select-beast2${index}`)
-                    // add Sector name and id From JSON
-                    sectors.forEach((Sitem) => {
-                        let optionElement = document.createElement('option');
-                        optionElement.value = Sitem.id;
-                        optionElement.textContent='';
-                        optionElement.textContent = Sitem.name + '-₾' + Sitem['prices'][0]['price'];
-                        item.appendChild(optionElement);
-                    })
+            const tomselect2 = document.querySelectorAll('.tomselect3');
 
 
+            let lastItem;
+            if (tomselect2.length > 0) {
+                // Get the very last item
+                lastItem = tomselect2[tomselect2.length - 1];
+                sectors.forEach((Sitem) => {
+                    let optionElement = document.createElement('option');
+                    optionElement.value = Sitem['prices'][0]['price'] + '-' + Sitem['id'];
+                    optionElement.textContent = '';
+                    optionElement.textContent = Sitem.name + '-₾' + Sitem['prices'][0]['price'];
+                    lastItem.appendChild(optionElement);
                 })
-            })
-
+            }
 
 
             //make first addition active
@@ -419,42 +467,59 @@
                     const firstInfo3 = document.querySelector(`.removeInfo`)
                     firstInfo3.classList.remove('hidden')
 
-                    // ======= დაჯამება  ======
+                    // ======= დაჯამება წაშლისას ======
 
                     const totalValue = document.getElementById('total_price')
-                        const prices = document.querySelectorAll('select.tomselect2')
+                    const totalValue2 = document.getElementById('total_price2')
+                    const prices = document.querySelectorAll('select.tomselect3')
 
-                        let sum = 0;
+                    let sum2 = 0;
 
-                        prices.forEach((item, index) => {
-                            var selectedOption = item.options[item.selectedIndex];
-                            let content = selectedOption.text.slice(-2);
+                    prices.forEach((item, index) => {
+                        var selectedOption = item.options[item.selectedIndex];
+                        let content = selectedOption.text.slice(-2);
 
-                            if (content.includes('₾')) {
-                                content = selectedOption.text.slice(-1)
-                            }
+                        if (content.includes('₾')) {
+                            content = selectedOption.text.slice(-1)
+                        }
 
-                            content = Number(content)
-                            sum += content;
-                            totalValue.value=sum;
-                        })
+                        content = Number(content)
+                        sum2 += content;
+                        totalValue.value = sum2;
+                        totalValue2.value = sum2;
+
+                    })
+
 
                 })
             })
+
+
+            const totalValue3 = document.getElementById('total_price')
+            const totalValue4 = document.getElementById('total_price2')
+            const prices = document.querySelectorAll('select.deliveryprice ')
+
+            prices.forEach((item, index) => {
+                item.addEventListener('change', () => {
+                    console.log('change')
+                    totalValue3.value = '';
+                    totalValue4.value = '';
+                })
+
+            })
+
         })
 
 
-
-        //=================  დაჯამება  ==================
+        // =================  დაჯამება 2 ===============================
 
         const sumBtn = document.getElementById('sum')
         const totalValue = document.getElementById('total_price')
+        const totalValue2 = document.getElementById('total_price2')
 
 
         sumBtn.addEventListener('click', () => {
-            const prices = document.querySelectorAll('select.tomselect2')
-
-
+            const prices = document.querySelectorAll('select.deliveryprice ')
             let sum = 0;
 
             prices.forEach((item, index) => {
@@ -467,7 +532,8 @@
 
                 content = Number(content)
                 sum += content;
-                totalValue.value=sum;
+                totalValue.value = sum;
+                totalValue2.value = sum;
             })
 
         })
@@ -492,6 +558,7 @@
             document.querySelector('.orderInfoContainer').innerHTML = ''
             orderCount.value = '';
             orderCount.disabled = false
+            totalValue.value = '';
         })
 
 
@@ -501,10 +568,36 @@
 
         orderForm.addEventListener('submit', (e) => {
             e.preventDefault()
+
+            document.querySelectorAll('.removeButton').forEach(button => {
+                button.style = "color:gray"
+            })
+
+            // Select all divs with the class `removeInfo`
+            const divs = Array.from(orderForm.querySelectorAll('div.removeInfo'));
+            const emptyDivs = divs.filter(div => {
+                const inputs = div.querySelectorAll('.validation');
+                return Array.from(inputs).some(input => input.value === '');
+            });
+
+            console.log(emptyDivs)
+            // For each empty div, find the corresponding button
+            const removeButtons = emptyDivs.map(div => {
+                // Search from the document root
+                return document.querySelector(`button.removeButton[aria-controls="${div.id}"]`);
+            }).filter(button => button !== null);
+
+
+            console.log(removeButtons)
+            removeButtons.forEach(button => {
+                button.style = "color:red"
+            })
+
+
             const inputs = orderForm.querySelectorAll('.validation')
             const emptyInputs = Array.from(inputs).filter(input => input.value === '');
 
-            console.log(emptyInputs)
+
             emptyInputs.forEach(input => {
                 input.style.border = '1px solid red'
             })
@@ -520,6 +613,7 @@
         })
 
     </script>
+
 @endif
 
 {{--Dark Menu At Load--}}
@@ -543,6 +637,7 @@
     localStorage.setItem('theme', JSON.stringify(defaultTheme));
     localStorage.setItem('ynexMenu', 'dark');
     localStorage.setItem('layout-theme', 'dark');
+
 </script>
 
 
@@ -624,7 +719,173 @@
     })
 
 </script>
+
+
+<script>
+    new TomSelect("#payment_select", {
+        create: true,
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+    });
+
+</script>
+
+{{--copy for driver--}}
+<script>
+    function myFunction() {
+        // Get the text field
+        let copyText = document.getElementById("address");
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+
+    }
+</script>
+
+{{--=====Edit Order Functioanality for Customers=====--}}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const prices = document.querySelectorAll('.edit-select')
+
+
+    })
+</script>
+
+
+{{--===========EDIT ORDER BY CUSTOMER===========--}}
+
+{{--@if(request()->routeIs('order_customer_update'))--}}
+<script>
+
+    // Sum Functionality
+    const sumBtn = document.getElementById('sum')
+    const totalValue = document.getElementById('total_price')
+    const totalValue2 = document.getElementById('total_price2')
+
+    sumBtn.addEventListener('click', () => {
+        const prices = document.querySelectorAll('select.delivery-price ')
+        let sum = 0;
+
+        prices.forEach((item, index) => {
+            var selectedOption = item.options[item.selectedIndex];
+            let content = parseFloat(selectedOption.getAttribute('data-price'));
+
+            content = Number(content)
+            sum += content;
+            totalValue.value = sum;
+            totalValue2.value = sum;
+        })
+        console.log(totalValue2.value)
+    })
+
+    // If changed location then clear sum
+    const prices2 = document.querySelectorAll('select.delivery-price ')
+    prices2.forEach(select => {
+        select.addEventListener('change', () => {
+            totalValue.value = '';
+            totalValue2.value = '';
+        })
+    })
+
+    // Delete Item Functionality
+    const deleteButton = document.querySelectorAll('.deleteButton')
+    const deleteitemform = document.getElementById('deleteitemform')
+    const item_input = document.getElementById('item-input')
+
+    deleteButton.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            item_input.value = button.getAttribute('data-itemId')
+            console.log(item_input.value)
+            totalValue.value = '';
+            totalValue2.value = '';
+            deleteitemform.submit()
+        })
+    })
+
+
+    // Edit Order Validation
+
+    const orderForm = document.getElementById('orderForm')
+
+    orderForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        document.querySelectorAll('.removeButton').forEach(button => {
+            button.style = "color:gray"
+        })
+
+        // Select all divs with the class `removeInfo`
+        const divs = Array.from(orderForm.querySelectorAll('div.removeInfo'));
+        const emptyDivs = divs.filter(div => {
+            const inputs = div.querySelectorAll('.validation');
+            return Array.from(inputs).some(input => input.value === '');
+        });
+
+        console.log(emptyDivs)
+        // For each empty div, find the corresponding button
+        const removeButtons = emptyDivs.map(div => {
+            // Search from the document root
+            return document.querySelector(`button.removeButton[aria-controls="${div.id}"]`);
+        }).filter(button => button !== null);
+
+
+        console.log(removeButtons)
+        removeButtons.forEach(button => {
+            button.style = "color:red"
+        })
+
+
+        const inputs = orderForm.querySelectorAll('.validation')
+        const emptyInputs = Array.from(inputs).filter(input => input.value === '');
+
+
+        emptyInputs.forEach(input => {
+            input.style.border = '1px solid red'
+        })
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                input.style.border = '1px solid green';
+            })
+        })
+
+        if (emptyInputs.length === 0) {
+            orderForm.submit();
+        }
+    })
+
+
+
+
+
+
+
+</script>
+{{--@endif--}}
+
+
+{{--===========RECEIVE SSE===========--}}
+<script>
+    const eventSource = new EventSource("{{ route('stream') }}");
+
+    eventSource.onmessage = function (event) {
+
+
+        if (parseInt(event.data) > 0) {
+            // document.getElementById('notification-sound').play();
+            document.getElementById('badge').style.display = 'block';
+            document.getElementById('notification-icon-badge2').textContent = event.data;
+        }
+
+    };
+</script>
+
+
 </body>
 
 </html>
-

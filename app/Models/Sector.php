@@ -9,11 +9,12 @@ class Sector extends Model
 {
     use HasFactory;
 
-
+protected $guarded = [];
 
     public function prices(){
         return $this->hasMany(ServicePrice::class);
     }
+
 
     public function items(){
         return $this->hasMany(Item::class);

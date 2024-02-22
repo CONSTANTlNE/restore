@@ -7,16 +7,7 @@
                 <div class="header-element">
                     <div class="horizontal-logo">
                         <a href="index.html" class="header-logo">
-                            <img src="../assets/images/brand-logos/desktop-logo.png" alt="logo"
-                                 class="desktop-logo">
-                            <img src="../assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
-                            <img src="../assets/images/brand-logos/desktop-dark.png" alt="logo"
-                                 class="desktop-dark">
-                            <img src="../assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark">
-                            <img src="../assets/images/brand-logos/desktop-white.png" alt="logo"
-                                 class="desktop-white">
-                            <img src="../assets/images/brand-logos/toggle-white.png" alt="logo"
-                                 class="toggle-white">
+
                         </a>
                     </div>
                 </div>
@@ -43,99 +34,6 @@
                 </div>
 
                 <!-- start header country -->
-                <div class="header-element py-[1rem] md:px-[0.65rem] px-2  header-country hs-dropdown ti-dropdown  hidden sm:block [--placement:bottom-left]">
-                    <button id="dropdown-flag" type="button"
-                            class="hs-dropdown-toggle ti-dropdown-toggle !p-0 flex-shrink-0  !border-0 !rounded-full !shadow-none">
-                        <img src="{{asset('assets/images/flags/us_flag.jpg')}}" alt="flag-img"
-                             class="h-[1.25rem] w-[1.25rem] rounded-full">
-                    </button>
-
-                    <div class="hs-dropdown-menu ti-dropdown-menu min-w-[10rem] hidden !-mt-3"
-                         aria-labelledby="dropdown-flag">
-                        <div class="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10">
-                            <div class="py-2 first:pt-0 last:pb-0">
-                                <div class="ti-dropdown-item !p-[0.65rem] ">
-                                    <div class="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                                        <div class="h-[1.375rem] flex items-center w-[1.375rem] rounded-full">
-                                            <img src="{{asset('assets/images/flags/us_flag.jpg')}}" alt="flag-img"
-                                                 class="h-[1rem] w-[1rem] rounded-full">
-                                        </div>
-                                        <div>
-                                            <p class="!text-[0.8125rem] font-medium">
-                                                English
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ti-dropdown-item !p-[0.65rem]">
-                                    <div class="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                                        <div class="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
-                                            <img src="{{asset('assets/images/flags/spain_flag.jpg')}}" alt="flag-img"
-                                                 class="h-[1rem] w-[1rem] rounded-full">
-                                        </div>
-                                        <div>
-                                            <p class="!text-[0.8125rem] font-medium">
-                                                Spanish
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ti-dropdown-item !p-[0.65rem]">
-                                    <div class="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                                        <div class="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
-                                            <img src="{{asset('assets/images/flags/french_flag.jpg')}}" alt="flag-img"
-                                                 class="h-[1rem] w-[1rem] rounded-full">
-                                        </div>
-                                        <div>
-                                            <p class="!text-[0.8125rem] font-medium">
-                                                French
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ti-dropdown-item !p-[0.65rem]">
-                                    <div class="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                                        <div class="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
-                                            <img src="{{asset('assets/images/flags/germany_flag.jpg')}}" alt="flag-img"
-                                                 class="h-[1rem] w-[1rem] rounded-full">
-                                        </div>
-                                        <div>
-                                            <p class="!text-[0.8125rem] font-medium">
-                                                German
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ti-dropdown-item !p-[0.65rem]">
-                                    <div class="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                                        <div class="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
-                                            <img src="{{asset('assets/images/flags/italy_flag.jpg')}}" alt="flag-img"
-                                                 class="h-[1rem] w-[1rem] rounded-full">
-                                        </div>
-                                        <div>
-                                            <p class="!text-[0.8125rem] font-medium">
-                                                Italian
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ti-dropdown-item !p-[0.65rem]">
-                                    <div class="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                                        <div class="h-[1.375rem] w-[1.375rem] flex items-center  rounded-sm">
-                                            <img src="{{asset('assets/images/flags/russia_flag.jpg')}}" alt="flag-img"
-                                                 class="h-[1rem] w-[1rem] rounded-full">
-                                        </div>
-                                        <div>
-                                            <p class="!text-[0.8125rem] font-medium">
-                                                Russian
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- end header country -->
 
                 <!-- light and dark theme -->
