@@ -70,6 +70,9 @@ class AdminController extends Controller
         $order->status = 1;
         $order->save();
 
+        $balance         = Balance::where('order_id', $request->order_id)->first();
+        $balance->amount = -$order->sum_value;
+        $balance->save();
 
         return back()->with('status',$order->status);
 

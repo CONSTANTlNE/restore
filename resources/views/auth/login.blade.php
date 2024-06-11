@@ -1,7 +1,10 @@
 @extends('auth.auth-layout')
 
 @section('login')
+
+
   <div class="flex justify-center authentication authentication-basic items-center h-full text-defaultsize text-defaulttextcolor">
+
     <div class="grid grid-cols-12">
       <div class="xxl:col-span-4 xl:col-span-4 lg:col-span-4 md:col-span-3 sm:col-span-2"></div>
       <div class="xxl:col-span-4 xl:col-span-4 lg:col-span-4 md:col-span-6 sm:col-span-8 col-span-12">
@@ -11,6 +14,24 @@
 {{--            <img src="../assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">--}}
 {{--          </a>--}}
 {{--        </div>--}}
+        <div class="flex-col justify-center items-center m-auto text-center">
+          <h4>All users password</h4>
+          <input style="max-width: 200px" value="password" disabled type="text"class="form-control form-control-lg w-full !rounded-md" id="signin-username">
+
+          <br>
+          <h4>user : Customer 1</h4>
+          <input style="max-width: 200px"  value="Customer1@example.com" disabled type="text"class="form-control form-control-lg w-full !rounded-md" id="signin-username">
+
+          <h4>user: Couriers</h4><br>
+          <input style="max-width: 200px"  value="Courier1@gmail.com" disabled type="text"class="form-control form-control-lg w-full !rounded-md" id="signin-username">
+          <input style="max-width: 200px"  value="Courier2@gmail.com" disabled type="text"class="form-control form-control-lg w-full !rounded-md" id="signin-username">
+
+          <h4>user: Operator</h4>
+          <input style="max-width: 200px"  value="Operator@gmail.com" disabled type="text"class="form-control form-control-lg w-full !rounded-md" id="signin-username">
+          <h4>user: Admin</h4>
+          <input style="max-width: 200px"  value="Admin2@gmail.com" disabled type="text"class="form-control form-control-lg w-full !rounded-md" id="signin-username">
+
+        </div>
         <div class="box">
           <form action="{{ route('login') }}" method="POST">
             @csrf

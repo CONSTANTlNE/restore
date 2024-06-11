@@ -1,6 +1,6 @@
 @extends('main-layout')
 @php
-    //        dd($balance);
+//            dd($balance);
 
 @endphp
 @section('admin-orders')
@@ -37,7 +37,13 @@
                                         <form action="{{route('confirm_order')}}" method="post">
                                             @csrf
                                             <input style="display: none" name="id" value="{{$order->id}}">
-                                            <button style="color:red;background: black" @foreach($balance as $amount)@if($amount->customer_id == $order->user->id  && $amount->total_amount < $order->sum_value) type="button" @else type="submit" @endif
+                                            <button style="color:red;background: black"
+                                                    @foreach($balance as $amount)
+                                                        @if($amount->customer_id == $order->user->id  && $amount->total_amount < $order->sum_value)
+{{--                                                            @php dd( $amount->total_amount) @endphp--}}
+                                                            type="button"
+                                                    @else type="submit"
+                                                    @endif
                                                     @endforeach
                                                     class="ti-btn ti-btn-light ti-btn-wave">
                                                 დადასტურება

@@ -50,6 +50,10 @@
             height: 1em !important; /* Change the height here for horizontal scroll */
         }
 
+        .dataTables_filter input[type="search"] {
+            max-width: 150px;
+        }
+
     </style>
 </head>
 
@@ -116,7 +120,7 @@
 
 <div id="responsive-overlay"></div>
 
-{{--<audio id="notification-sound" src="{{asset('assets/sms.mp3')}} " preload="auto"></audio>--}}
+<audio id="notification-sound" src="{{asset('assets/sms.mp3')}} " preload="auto"></audio>
 {{--<button style="display: none" id="play-button">Play Sound</button>--}}
 
 <!-- Preline JS -->
@@ -764,11 +768,11 @@
 <script>
 
     // Sum Functionality
-    const sumBtn = document.getElementById('sum')
-    const totalValue = document.getElementById('total_price')
-    const totalValue2 = document.getElementById('total_price2')
+    const sumBtn2 = document.getElementById('sum')
+    const totalValue22 = document.getElementById('total_price')
+    const totalValue23 = document.getElementById('total_price2')
 
-    sumBtn.addEventListener('click', () => {
+    sumBtn2.addEventListener('click', () => {
         const prices = document.querySelectorAll('select.delivery-price ')
         let sum = 0;
 
@@ -778,8 +782,8 @@
 
             content = Number(content)
             sum += content;
-            totalValue.value = sum;
-            totalValue2.value = sum;
+            totalValue22.value = sum;
+            totalValue23.value = sum;
         })
         console.log(totalValue2.value)
     })
@@ -811,9 +815,9 @@
 
     // Edit Order Validation
 
-    const orderForm = document.getElementById('orderForm')
+    const orderForm2 = document.getElementById('orderForm')
 
-    orderForm.addEventListener('submit', (e) => {
+    orderForm2.addEventListener('submit', (e) => {
         e.preventDefault()
 
         document.querySelectorAll('.removeButton').forEach(button => {
@@ -821,7 +825,7 @@
         })
 
         // Select all divs with the class `removeInfo`
-        const divs = Array.from(orderForm.querySelectorAll('div.removeInfo'));
+        const divs = Array.from(orderForm2.querySelectorAll('div.removeInfo'));
         const emptyDivs = divs.filter(div => {
             const inputs = div.querySelectorAll('.validation');
             return Array.from(inputs).some(input => input.value === '');
@@ -841,7 +845,7 @@
         })
 
 
-        const inputs = orderForm.querySelectorAll('.validation')
+        const inputs = orderForm2.querySelectorAll('.validation')
         const emptyInputs = Array.from(inputs).filter(input => input.value === '');
 
 
@@ -855,7 +859,7 @@
         })
 
         if (emptyInputs.length === 0) {
-            orderForm.submit();
+            orderForm2.submit();
         }
     })
 
@@ -870,20 +874,24 @@
 
 
 {{--===========RECEIVE SSE===========--}}
+@hasanyrole('operator|admin')
 <script>
-    const eventSource = new EventSource("{{ route('stream') }}");
 
-    eventSource.onmessage = function (event) {
+    document.addEventListener('DOMContentLoaded', function () {
+        const eventSource = new EventSource("{{ route('stream') }}");
+        eventSource.onmessage = function (event) {
+            if (parseInt(event.data) > 0) {
+                document.getElementById('notification-sound').play();
+                document.getElementById('badge').style.display = 'block';
+                document.getElementById('notification-icon-badge2').textContent = event.data;
+            }
+        };
+    });
 
 
-        if (parseInt(event.data) > 0) {
-            // document.getElementById('notification-sound').play();
-            document.getElementById('badge').style.display = 'block';
-            document.getElementById('notification-icon-badge2').textContent = event.data;
-        }
-
-    };
 </script>
+@endrole
+
 
 
 </body>

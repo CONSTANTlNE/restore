@@ -57,12 +57,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/password/update',[AdminController::class,'updatePassword'])->name('updatePassword');
     Route::post('/user/delete',[AdminController::class,'deleteUser'])->name('user_delete');
     Route::post('/items/assign',[AdminController::class,'assigments'])->name('assign_driver');
-        Route::post('/user/activate',[AdminController::class,'activateUser'])->name('activateUser');
-        Route::post('/user/deactivate',[AdminController::class,'deactivateUser'])->name('deactivateUser');
+    Route::post('/user/activate',[AdminController::class,'activateUser'])->name('activateUser');
+    Route::post('/user/deactivate',[AdminController::class,'deactivateUser'])->name('deactivateUser');
     //Route::post('/admin/items/update', [AdminController::class, 'editItem'])->name('admin-items-edit');
     Route::post('/admin/items/update', [OrderController::class, 'updateItem'])->name('admin-items-edit');
 
-    //SSE
+
         Route::get('/sse',[SSEcontroller::class,'stream'])->name('stream');
 
         Route::post('/admin/items/delete', [OrderController::class, 'deleteItem'])->name('admin-items-delete');

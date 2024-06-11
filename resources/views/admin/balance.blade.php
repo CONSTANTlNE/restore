@@ -1,6 +1,6 @@
 @extends('main-layout')
 @php
-    //        dd($balance);
+//            dd(is_null($balance));
 @endphp
 @section('admin-balance')
 
@@ -96,7 +96,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if($balance!==[])
+{{--                        @if(is_null($balance))--}}
                             @foreach($customers as $index => $customer)
                                 <tr style="text-align: center">
                                     <td>{{$customer->name}}</td>
@@ -121,7 +121,7 @@
 
                                 </tr>
                             @endforeach
-                        @endif
+{{--                        @endif--}}
                         </tbody>
                     </table>
                 </div>

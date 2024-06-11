@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Sector;
 use App\Models\ServicePrice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class OrderController extends Controller
 {
@@ -80,6 +81,9 @@ class OrderController extends Controller
             $item->customer_comment = $request['comment'][$i];
             $item->save();
         }
+
+        $count = Order::where('status', 0)->count();
+        Cache::put('count', $count, 60);
 
 
         return back();
@@ -180,9 +184,9 @@ class OrderController extends Controller
         $order->sum_value += $difference;
         $order->save();
 
-        $balance         = Balance::where('order_id', $request->order_id)->first();
-        $balance->amount = -$order->sum_value;
-        $balance->save();
+//        $balance         = Balance::where('order_id', $request->order_id)->first();
+//        $balance->amount = -$order->sum_value;
+//        $balance->save();
 
 
         $item->delivery_price   = $newItemPrice;

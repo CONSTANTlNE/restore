@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SSEcontroller extends Controller
@@ -11,9 +12,9 @@ class SSEcontroller extends Controller
     public function stream(Request $request)
     {
 
-        $count = Order::where('status', 0)->count();
+      $count =Cache::get('count');
 
-//        dd($count);
+        dd($count);
 
             // Send SSE headers
             header('Content-Type: text/event-stream');
